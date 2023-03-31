@@ -20,13 +20,10 @@ function updateSimplex(dist_name, params) {
     
     var cutpoints = document.querySelectorAll(".cutpoint");
     for (let i=0;i<alpha.length;i++) {
-        var num = Math.round(100*alpha[i]) / 100;
-        num = `${num}`.padEnd(4, "0");
-        if (num.includes("Infinity"))
-            num = num.replace("Infinity", "∞");    
-        else if (!num.includes("."))
-            num = `${num.replace(/0{3}$/g, "")}.00`;    
-        cutpoints[i].innerText = num
+        var num = alpha[i].toPrecision(2);
+        if (!isFinite(alpha[i]));
+            num = `${num}`.replace("Infinity", "∞");
+        cutpoints[i].innerText = num; 
     }
 }
 
