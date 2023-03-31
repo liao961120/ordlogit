@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+
+<head>
+    <title>OrderedLogit Link</title>
+    <meta name="viewport" content="width=device-width">
+    <link type="text/css" rel="stylesheet" media="screen" href="./css/page.css">
+    <link type="text/css" rel="stylesheet" media="screen" href="./css/chart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.css" />
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wnumb/1.2.0/wNumb.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jstat@latest/dist/jstat.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+        integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+        integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // • auto-render specific keys, e.g.:
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                ],
+                // • rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="contain">
+
+        <h1>Ordered Logit</h1>
+        <p class="description"></p>
+
+
+        <div class="frame">
+            <div id="chart"></div>    
+            <aside>
+                <div class="phi">
+                    <div class="slider-label">$phi$</div>
+                    <div id="slider_0"></div>
+                </div>
+
+                <div class="cutpoints">
+                    <div>$\kappa_1=$ <span class="cutpoint"></span></div>
+                    <div>$\kappa_2=$ <span class="cutpoint"></span></div>
+                    <div>$\kappa_3=$ <span class="cutpoint"></span></div>
+                </div>
+        
+                <div class="bars">
+                    <div> <span class="simplex"></span>
+                        <div id="slider_1" class="slider"></div> <span>$p_1$</span>
+                    </div>
+                    <div> <span class="simplex"></span>
+                        <div id="slider_2" class="slider"></div> <span>$p_2$</span>
+                    </div>
+                    <div> <span class="simplex"></span>
+                        <div id="slider_3" class="slider"></div> <span>$p_3$</span>
+                    </div>
+                    <div> <span class="simplex"></span>
+                        <div id="slider_4" class="slider"></div> <span>$p_4$</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <br><br><br><br>
+        <hr class="my-hr-line">
+        <div class="formula">
+        $$
+        \begin{aligned}
+            & R_i \sim Categorical( 
+                \begin{bmatrix}
+                    \Pr(R = 1) \\ 
+                    \Pr(R = 2) \\ 
+                    \Pr(R = 3) \\
+                    \Pr(R = 4)
+                \end{bmatrix}
+            )\\
+            & Pr(R_i = 4) = Pr(R_i \le 4) - Pr(R_i \le 3) \\
+            & Pr(R_i = 3) = Pr(R_i \le 3) - Pr(R_i \le 2) \\
+            & Pr(R_i = 2) = Pr(R_i \le 2) - Pr(R_i \le 1) \\
+            & Pr(R_i = 1) = Pr(R_i \le 1) \\
+
+            \\ 
+            & logit[ Pr(R_i \le 4) ] =  logit(1) =  \infty \\
+            & logit[ Pr(R_i \le 3) ] =  log \frac{Pr(R_i \le 3)}{1 - Pr(R_i \le 3)} = \kappa_3 - \phi_i \\
+            & logit[ Pr(R_i \le 2) ] =  log \frac{Pr(R_i \le 2)}{1 - Pr(R_i \le 2)} = \kappa_2 - \phi_i \\
+            & logit[ Pr(R_i \le 1) ] =  logit[ Pr(R_i = 1) ] = log \frac{Pr(R_i = 1)}{1 - Pr(R_i = 1)} = \kappa_1 - \phi_i \\
+            
+            \\
+            &\text{ or succintly as } \\
+            & logit( P_c ) = \kappa_c - \phi_i ~, \\
+            & ~~~ \text{where } P_c = Pr(R_i \le c) \text{, cutpoint } c = 1, 2, 3 
+        \end{aligned}
+        $$
+        </div>
+
+        <style>
+            .contain {
+                display: block;
+                width: 95%;
+                margin: 0 auto;
+                padding: 0 auto;
+            }
+            /* layout */
+            .frame {
+                display: flex;
+                flex-direction: row;
+                width: 88%;
+                min-width: 392px;
+                margin: 0 auto;
+                align-items: center;
+                /* align-content: space-between; */
+                justify-content: space-between;
+            }
+            #chart {
+                width: 40%;
+                min-width: 392px;
+            }
+            /* Slide bar styles*/
+            .phi {
+                width: 100%;
+                min-width: 200px;
+                margin: 3.5em auto;
+            }
+            .cutpoints {
+                width: 100%;
+                margin: 0 auto 1em auto;
+                display: flex;
+                justify-content: space-around;
+                align-items: flex-end;
+            }
+            .cutpoints > div {
+                text-align: right;
+                margin-right: .5em;
+            }
+            .bars {
+                width: 100%;
+                display: flex;
+                height: 200px;
+                justify-content: space-around;
+                text-align: right;
+            }
+            .bars>div>div.slider {
+                height: 150px;
+            }
+            .bars div .simplex, .bars div span {
+                display: inline-block;
+                margin-bottom: 1em;
+            }
+            
+            @media (max-width: 1100px) {
+                .frame {
+                    flex-direction: column;
+                }
+                #chart {
+                    width: 100%;
+                }
+            }
+        </style>
+    </div>
+</body>
+
+
+<script src="./js/dist/orderedLogit.js"></script>
+<script src="./js/chart_config.js"></script>
+<script src="./js/rand.js"></script>
+<script src="./js/chart_function.js"></script>
+<script src="./js/interact.js"></script>
+
+
+</html>
