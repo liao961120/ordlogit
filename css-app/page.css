@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
+.ordlogit-app {
+	font-family: 'Roboto', serif;
+	text-align: center;
+	padding-bottom: 60px;
+}
+
+.ordlogit-app .container {
+	width: 750px;
+	margin: 0px auto;
+	padding-top: 0px;
+	padding-bottom: 20px;
+}
+
+.ordlogit-app .description {
+	color: blue;
+	font-size: 16pt;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.ordlogit-app .formula {
+	font-size: 16pt;
+	padding-bottom: 0px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.ordlogit-app .slider-label {
+	font-size: 16pt;
+  margin-top: -4px;
+  text-align: justify;
+  float:left;
+  }
+
+.ordlogit-app .controls {
+  margin-top: 60px;
+  margin-bottom: 80px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.ordlogit-app #slider_0 {
+  margin-left: 50px;
+}
+
+.ordlogit-app #slider_1,
+.ordlogit-app #slider_2,
+.ordlogit-app #slider_3,
+.ordlogit-app #slider_4, 
+.ordlogit-app #slider_5, 
+.ordlogit-app #slider_6 {
+  margin-left: 50px;
+}
+
+.ordlogit-app .noUi-connect {
+  background: #00274C !important;     /* michigan blue */
+}

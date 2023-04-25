@@ -1,0 +1,47 @@
+.ordlogit-app .slider {
+  width: 600px;
+}
+
+.ordlogit-app .axis path,
+.ordlogit-app .axis line {
+  stroke: black;  
+}
+ 
+.ordlogit-app .chart path {
+    stroke-width: 1;
+    fill: none;
+}
+ 
+.ordlogit-app .line {
+  stroke: red;
+  stroke-width: 5;
+  opacity: 0.6;
+}
+
+.ordlogit-app .line_reference {
+  stroke: green;
+  stroke-width: 5;
+  opacity: 0.6;
+}
+
+.ordlogit-app .bar {
+  fill: red;
+  opacity: 0.8;
+}
+
+.ordlogit-app .area {
+  fill: lightsteelblue;
+  opacity: 0.5;
+}
+
+.ordlogit-app .x-axis,
+.ordlogit-app .y-axis {
+  font-size: 1em;
+  font-family: sans-serif;
+}
+
+.ordlogit-app .mean{
+  stroke-dasharray: 5,5; 
+  stroke-width: 2;
+  stroke: lightgray;
+}
